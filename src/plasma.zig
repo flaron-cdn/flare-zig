@@ -1,4 +1,4 @@
-//! Plasma — cross-edge CRDT KV.
+//! Plasma - cross-edge CRDT KV.
 //!
 //! Plasma values converge across all edge nodes via gossip. Counters use
 //! `increment`/`decrement` and return the new aggregate value as a signed

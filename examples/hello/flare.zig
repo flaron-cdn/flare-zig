@@ -1,4 +1,4 @@
-//! hello — minimal HTTP echo flare in Zig.
+//! hello - minimal HTTP echo flare in Zig.
 //!
 //! Reads the inbound method and URL, returns a plain-text body.
 //! Demonstrates the bare minimum a Zig flare needs: alloc export,

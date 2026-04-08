@@ -1,4 +1,4 @@
-//! edge-ops — exercise edge operations: hash, base64, ULID, timestamp.
+//! edge-ops - exercise edge operations: hash, base64, ULID, timestamp.
 //!
 //! Computes SHA-256 of "flaron", base64-encodes the request URL,
 //! generates a fresh ULID, and reads the current edge time. Returns

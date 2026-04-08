@@ -1,9 +1,9 @@
-//! WebSocket support — read events, send frames, close the connection.
+//! WebSocket support - read events, send frames, close the connection.
 //!
 //! A flare configured for WebSockets is invoked once per event:
-//! - `ws_open` — client connected
-//! - `ws_message` — frame received
-//! - `ws_close` — client (or this flare) closed the connection
+//! - `ws_open` - client connected
+//! - `ws_message` - frame received
+//! - `ws_close` - client (or this flare) closed the connection
 //!
 //! The export name passed by the host is one of `ws_open`, `ws_message`,
 //! `ws_close`. Inside each export, call [`eventType`] to confirm and

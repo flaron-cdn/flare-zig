@@ -1,4 +1,4 @@
-//! secret-jwt — sign a JWT using a domain secret.
+//! secret-jwt - sign a JWT using a domain secret.
 //!
 //! Reads `JWT_SECRET` from the flare's allowlisted secrets, signs an
 //! HS256 token with a fixed claims payload, and returns the token in

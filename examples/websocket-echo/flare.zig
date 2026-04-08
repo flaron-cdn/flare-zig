@@ -1,4 +1,4 @@
-//! websocket-echo — round-trip every received frame back to the client.
+//! websocket-echo - round-trip every received frame back to the client.
 //!
 //! Demonstrates the WebSocket flare entry points: ws_open / ws_message /
 //! ws_close. Each is called by the host with a fresh invocation context.

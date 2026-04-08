@@ -27,7 +27,7 @@ pub fn uuid(allocator: std.mem.Allocator, version: UuidVersion) ![]u8 {
     return allocator.alloc(u8, 0);
 }
 
-/// Generate a ULID — 26-character Crockford base32, time-sortable.
+/// Generate a ULID - 26-character Crockford base32, time-sortable.
 pub fn ulid(allocator: std.mem.Allocator) ![]u8 {
     if (try env.idUlid(allocator)) |bytes| return bytes;
     return allocator.alloc(u8, 0);
@@ -40,7 +40,7 @@ pub fn nanoid(allocator: std.mem.Allocator, length: u32) ![]u8 {
     return allocator.alloc(u8, 0);
 }
 
-/// Generate a KSUID — K-sortable, 27-character base62.
+/// Generate a KSUID - K-sortable, 27-character base62.
 pub fn ksuid(allocator: std.mem.Allocator) ![]u8 {
     if (try env.idKsuid(allocator)) |bytes| return bytes;
     return allocator.alloc(u8, 0);

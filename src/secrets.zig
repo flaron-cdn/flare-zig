@@ -1,4 +1,4 @@
-//! Secrets — read domain-scoped secrets allowlisted for this flare.
+//! Secrets - read domain-scoped secrets allowlisted for this flare.
 //!
 //! The host enforces an allowlist per flare. Reading a secret that is not
 //! in the allowlist returns `null` (and is logged on the host side).

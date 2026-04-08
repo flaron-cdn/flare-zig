@@ -1,5 +1,5 @@
 //! Edge-side cryptography. All operations execute on the host using the
-//! flare's allowlisted secrets — the guest never sees raw key material.
+//! flare's allowlisted secrets - the guest never sees raw key material.
 
 const std = @import("std");
 const env = @import("env.zig");
@@ -74,7 +74,7 @@ pub fn decryptAes(allocator: std.mem.Allocator, secret_key: []const u8, cipherte
 ///
 /// Returns `Error.HostFailed` if the host returned no data, or
 /// `Error.BadHex` if the host response was not valid hex. Callers MUST
-/// treat both as hard failures — silently returning a zeroed buffer would
+/// treat both as hard failures - silently returning a zeroed buffer would
 /// weaken any token or key derived from these bytes.
 pub fn randomBytes(allocator: std.mem.Allocator, length: u32) ![]u8 {
     const hex_bytes = try env.cryptoRandomBytes(allocator, length) orelse return Error.HostFailed;

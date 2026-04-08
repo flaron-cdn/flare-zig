@@ -1,4 +1,4 @@
-//! spark-counter — per-site visit counter using Spark with TTL.
+//! spark-counter - per-site visit counter using Spark with TTL.
 //!
 //! Reads `visits`, increments by 1, writes back with a 24-hour TTL,
 //! and returns the new count as plain text.

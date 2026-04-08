@@ -12,7 +12,7 @@ pub fn setStatus(code: u16) void {
 }
 
 /// Set a response header. Calling with the same name twice overwrites the
-/// previous value — there is no append semantics.
+/// previous value - there is no append semantics.
 ///
 /// Header names are case-insensitive at the wire level but the host
 /// preserves whatever casing you pass.

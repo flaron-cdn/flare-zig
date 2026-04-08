@@ -28,7 +28,7 @@ pub fn now(allocator: std.mem.Allocator, fmt: []const u8) ![]u8 {
 }
 
 /// Convenience: current time as Unix milliseconds. Returns `0` if the host
-/// response could not be parsed (which should never happen — the host
+/// response could not be parsed (which should never happen - the host
 /// always returns a decimal integer).
 pub fn nowMs(allocator: std.mem.Allocator) !u64 {
     const bytes = try now(allocator, Format.millis);

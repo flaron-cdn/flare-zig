@@ -1,4 +1,4 @@
-//! Beam — outbound HTTP fetch from inside a flare.
+//! Beam - outbound HTTP fetch from inside a flare.
 //!
 //! Subject to the per-flare `MaxFetchRequests` limit. Responses are buffered
 //! into the per-invocation arena, so callers should keep response bodies

@@ -1,4 +1,4 @@
-//! beam-fetch — proxy a request to a public origin via Beam.
+//! beam-fetch - proxy a request to a public origin via Beam.
 //!
 //! Issues a GET to https://api.github.com/zen and returns the upstream
 //! body verbatim. Demonstrates outbound HTTP fetch from inside a flare.

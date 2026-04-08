@@ -41,7 +41,7 @@ pub fn escapeJsonString(allocator: std.mem.Allocator, out: *std.ArrayList(u8), s
     }
 }
 
-/// Parse a JSON array of strings. Permissive — handles whitespace, commas,
+/// Parse a JSON array of strings. Permissive - handles whitespace, commas,
 /// and `\"` escapes. Caller frees the slice and each contained string.
 pub fn parseStringArray(allocator: std.mem.Allocator, json: []const u8) ![][]u8 {
     var out = std.ArrayList([]u8){};

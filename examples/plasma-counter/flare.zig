@@ -1,4 +1,4 @@
-//! plasma-counter — globally consistent counter via Plasma CRDT.
+//! plasma-counter - globally consistent counter via Plasma CRDT.
 //!
 //! Increments `global_visits` by 1 on every request and returns the
 //! aggregate value. Plasma values converge across all edge nodes via

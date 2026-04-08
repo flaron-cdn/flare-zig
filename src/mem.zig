@@ -35,7 +35,7 @@ pub fn encodePtrLen(ptr: u32, len: u32) i64 {
 }
 
 /// Decode a hex string into raw bytes. Returns `null` on the first invalid
-/// character — callers MUST treat this as a hard failure (corrupted host
+/// character - callers MUST treat this as a hard failure (corrupted host
 /// response, never silently zero-fill, especially for crypto material).
 pub fn hexDecode(allocator: std.mem.Allocator, hex: []const u8) !?[]u8 {
     if (hex.len % 2 != 0) return null;
@@ -69,7 +69,7 @@ fn hexNibble(c: u8) ?u8 {
 //
 // The flaron host calls the guest's exported `alloc(size)` every time it
 // needs to hand a value back. A naive global allocator would leak that
-// memory for the lifetime of the entire WASM instance — long-lived flares
+// memory for the lifetime of the entire WASM instance - long-lived flares
 // would steadily grow until OOM.
 //
 // Instead we use a per-invocation bump arena. The flare's WASM exports
@@ -77,7 +77,7 @@ fn hexNibble(c: u8) ?u8 {
 // at the top of each invocation; everything the host allocates during that
 // invocation is reclaimed when control returns to the host.
 //
-// WASM is single-threaded, so a single mutable arena is sound — there are
+// WASM is single-threaded, so a single mutable arena is sound - there are
 // no other threads that could race.
 
 pub const ARENA_SIZE: usize = 256 * 1024;
@@ -96,7 +96,7 @@ pub fn resetArena() void {
 /// in `root.zig`) to write return values into the WASM linear memory. Hands
 /// out 8-byte aligned slices from the bump arena.
 ///
-/// Returns `0` on failure (size not positive, arena exhausted) — the host
+/// Returns `0` on failure (size not positive, arena exhausted) - the host
 /// treats `0` as "guest cannot accept this value" and propagates an error.
 pub fn guestAlloc(size: i32) i32 {
     if (size <= 0) return 0;
