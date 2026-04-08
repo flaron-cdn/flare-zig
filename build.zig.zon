@@ -1,6 +1,6 @@
 .{
     .name = .flaron,
-    .version = "1.0.0",
+    .version = "1.0.1",
     .fingerprint = 0xaf2dc0c72b64b595,
     .minimum_zig_version = "0.15.2",
     .dependencies = .{},

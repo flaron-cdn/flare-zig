@@ -153,3 +153,61 @@ test "spark.pull returns the host count on success" {
     const n = try flaron.spark.pull(allocator, "edge-sgp", &.{ "k1", "k2" });
     try testing.expectEqual(@as(u32, 0), n);
 }
+
+test "spark.pull returns positive count when host reports keys migrated" {
+    const allocator = testing.allocator;
+    var state: flaron.env.HostState = undefined;
+    flaron.env.HostState.init(&state, allocator);
+    defer state.deinit();
+    state.spark_pull_result = 7;
+    flaron.env.installHostStub(&state);
+    defer flaron.env.uninstallHostStub();
+
+    const n = try flaron.spark.pull(allocator, "edge-sgp", &.{ "k1", "k2", "k3" });
+    try testing.expectEqual(@as(u32, 7), n);
+}
+
+test "spark.pull maps negative host codes to typed errors" {
+    const allocator = testing.allocator;
+
+    const Case = struct {
+        host_code: i32,
+        expected: flaron.spark.PullError,
+    };
+    const cases = [_]Case{
+        .{ .host_code = -3, .expected = flaron.spark.PullError.WriteLimit },
+        .{ .host_code = -5, .expected = flaron.spark.PullError.NotAvailable },
+        .{ .host_code = -6, .expected = flaron.spark.PullError.Internal },
+        .{ .host_code = -8, .expected = flaron.spark.PullError.BadKey },
+        .{ .host_code = -9, .expected = flaron.spark.PullError.NoCapability },
+    };
+
+    for (cases) |c| {
+        var state: flaron.env.HostState = undefined;
+        flaron.env.HostState.init(&state, allocator);
+        defer state.deinit();
+        state.spark_pull_result = c.host_code;
+        flaron.env.installHostStub(&state);
+        defer flaron.env.uninstallHostStub();
+
+        try testing.expectError(
+            c.expected,
+            flaron.spark.pull(allocator, "edge-sgp", &.{"k"}),
+        );
+    }
+}
+
+test "spark.pull maps unknown negative codes to PullError.Unknown" {
+    const allocator = testing.allocator;
+    var state: flaron.env.HostState = undefined;
+    flaron.env.HostState.init(&state, allocator);
+    defer state.deinit();
+    state.spark_pull_result = -42;
+    flaron.env.installHostStub(&state);
+    defer flaron.env.uninstallHostStub();
+
+    try testing.expectError(
+        flaron.spark.PullError.Unknown,
+        flaron.spark.pull(allocator, "edge-sgp", &.{"k"}),
+    );
+}

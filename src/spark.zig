@@ -1,4 +1,4 @@
-//! Spark — per-site local KV with TTL, persisted on the edge node.
+//! Spark - per-site local KV with TTL, persisted on the edge node.
 //!
 //! Reads and writes are quota-limited per invocation. Keys must match
 //! `^[a-zA-Z0-9:._\-]{1,256}$` and may not begin with `__flaron:` or
@@ -9,7 +9,7 @@ const env = @import("env.zig");
 const json = @import("json.zig");
 
 pub const Entry = struct {
-    /// Owned by the caller — free with `entry.deinit(allocator)`.
+    /// Owned by the caller - free with `entry.deinit(allocator)`.
     value: []u8,
     /// Seconds until the host expires this entry. `0` means "no expiry".
     ttl_secs: u32,
@@ -32,8 +32,10 @@ pub const Error = error{
 };
 
 pub const PullError = error{
+    WriteLimit,
     NotAvailable,
     Internal,
+    BadKey,
     NoCapability,
     Unknown,
 };
@@ -52,10 +54,16 @@ fn fromSetCode(code: i32) Error {
     };
 }
 
+/// Map a positive `sparkErr*` numeric code to a typed `PullError` variant.
+///
+/// Callers receive the host's signed return value and must negate it before
+/// calling this. See `pull` for the wire convention.
 fn fromPullCode(code: i32) PullError {
-    return switch (@abs(code)) {
+    return switch (code) {
+        3 => PullError.WriteLimit,
         5 => PullError.NotAvailable,
         6 => PullError.Internal,
+        8 => PullError.BadKey,
         9 => PullError.NoCapability,
         else => PullError.Unknown,
     };
@@ -111,10 +119,17 @@ pub fn list(allocator: std.mem.Allocator) ![][]u8 {
 
 /// Migrate keys from another node's Spark store into this node. Returns the
 /// number of keys successfully migrated.
+///
+/// ## Wire convention
+///
+/// The host returns a signed `i32`:
+///
+/// - `>= 0` -> success, value is the count of migrated keys.
+/// - `< 0`  -> error, the absolute value is the matching `sparkErr*` code.
 pub fn pull(allocator: std.mem.Allocator, origin_node: []const u8, keys: []const []const u8) PullError!u32 {
     const keys_json = json.encodeStringArray(allocator, keys) catch return PullError.Internal;
     defer allocator.free(keys_json);
     const code = env.sparkPull(origin_node, keys_json);
     if (code >= 0) return @intCast(code);
-    return fromPullCode(code);
+    return fromPullCode(-code);
 }

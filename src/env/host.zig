@@ -29,6 +29,7 @@ pub const State = struct {
     spark_store: HashMap(SparkValue) = undefined,
     spark_get_err: bool = false,
     spark_set_err_code: i32 = 0,
+    spark_pull_result: i32 = 0,
 
     plasma_store: HashMap([]const u8) = undefined,
     plasma_counters: HashMap(i64) = undefined,
@@ -96,7 +97,7 @@ pub const State = struct {
 
     /// Construct a State in place at `out`. The State holds a self-pointer
     /// (the arena allocator's vtable closes over `&out.arena`), so the State
-    /// MUST live at a stable address — never copy it after `init`.
+    /// MUST live at a stable address - never copy it after `init`.
     pub fn init(out: *State, backing: std.mem.Allocator) void {
         out.* = .{
             .backing_allocator = backing,
@@ -342,7 +343,7 @@ pub fn spark_list(allocator: std.mem.Allocator) ![]u8 {
 pub fn spark_pull(origin: []const u8, keys_json: []const u8) i32 {
     _ = origin;
     _ = keys_json;
-    return 0;
+    return require().spark_pull_result;
 }
 
 pub fn plasma_get(allocator: std.mem.Allocator, key: []const u8) !?[]u8 {
