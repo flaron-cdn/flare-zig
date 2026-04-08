@@ -16,8 +16,7 @@ distributed-friendly ID generators, and structured logging.
 
 ## Install Zig
 
-Flaron's Zig SDK targets **Zig 0.13 or newer** and is tested on **Zig
-0.15.2**.
+Flaron's Zig SDK targets **Zig 0.15.2 or newer**.
 
 ```sh
 brew install zig                      # macOS
