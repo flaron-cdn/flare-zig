@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: mlugg/setup-zig@v1
+        with:
+          version: "0.13.0"
+
+      - name: Format check
+        run: zig fmt --check src/ tests/ examples/ build.zig
+
+      - name: Test
+        run: zig build test
+
+      - name: Build examples
+        run: zig build

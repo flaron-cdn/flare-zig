@@ -1,0 +1,16 @@
+.{
+    .name = .flaron,
+    .version = "1.0.0",
+    .fingerprint = 0xaf2dc0c72b64b595,
+    .minimum_zig_version = "0.13.0",
+    .dependencies = .{},
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+        "tests",
+        "examples",
+        "README.md",
+        "LICENSE",
+    },
+}
